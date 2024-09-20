@@ -35,18 +35,24 @@ jobs:
           dotnet build --configuration Release --output ./output
           popd
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E3687773A830499EAD20E61DA0184887 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D722F72B050B40C4861FDA0218B6D738 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AF181FCE1B294841948C52D90908A2EB }}
+      # - name: Login to Azure
+      #   uses: azure/login@v2
+      #   with:
+      #     client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E3687773A830499EAD20E61DA0184887 }}
+      #     tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D722F72B050B40C4861FDA0218B6D738 }}
+      #     subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AF181FCE1B294841948C52D90908A2EB }}
 
-      - name: 'Run Azure Functions Action'
-        uses: Azure/functions-action@v1
-        id: fa
+      # - name: 'Run Azure Functions Action'
+      #   uses: Azure/functions-action@v1
+      #   id: fa
+      #   with:
+      #     app-name: 'myfunction-demo'
+      #     slot-name: 'Production'
+      #     package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+
+      - name: 'Deploy to Azure Functions'
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'myfunction-demo'
-          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          
