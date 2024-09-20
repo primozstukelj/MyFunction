@@ -54,5 +54,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'myfunction-demo'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
